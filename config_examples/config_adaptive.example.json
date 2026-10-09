@@ -1,0 +1,96 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "strategy": "AdaptiveTrendStrategy",
+    "max_open_trades": 5,
+    "stake_currency": "USDT",
+    "stake_amount": "unlimited",
+    "tradable_balance_ratio": 0.95,
+    "fiat_display_currency": "USD",
+    "timeframe": "15m",
+    "dry_run": true,
+    "dry_run_wallet": 1000,
+    "cancel_open_orders_on_exit": false,
+    "trading_mode": "spot",
+    "margin_mode": "",
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 10,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+    },
+    "exit_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    "exchange": {
+        "name": "binance",
+        "api_key": "your_exchange_api_key",
+        "secret": "your_exchange_secret",
+        "ccxt_config": {},
+        "ccxt_async_config": {},
+        "pair_whitelist": [],
+        "pair_blacklist": [
+            "BNB/.*",
+            ".*(UP|DOWN|BEAR|BULL)/.*",
+            "(USDC|FDUSD|TUSD|DAI|USDP|EUR|AEUR)/.*"
+        ]
+    },
+    "pairlists": [
+        {
+            "method": "VolumePairList",
+            "number_assets": 40,
+            "sort_key": "quoteVolume",
+            "min_value": 5000000,
+            "refresh_period": 1800
+        },
+        {"method": "AgeFilter", "min_days_listed": 30},
+        {"method": "SpreadFilter", "max_spread_ratio": 0.003},
+        {"method": "PriceFilter", "low_price_ratio": 0.01},
+        {
+            "method": "RangeStabilityFilter",
+            "lookback_days": 3,
+            "min_rate_of_change": 0.03,
+            "refresh_period": 1440
+        },
+        {
+            "method": "VolatilityFilter",
+            "lookback_days": 7,
+            "min_volatility": 0.02,
+            "max_volatility": 0.75,
+            "refresh_period": 1440
+        },
+        {"method": "VolumePairList", "number_assets": 20, "sort_key": "quoteVolume"}
+    ],
+    "telegram": {
+        "enabled": false,
+        "token": "your_telegram_token",
+        "chat_id": "your_telegram_chat_id"
+    },
+    "api_server": {
+        "enabled": false,
+        "listen_ip_address": "127.0.0.1",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "jwt_secret_key": "change_me_to_something_random",
+        "CORS_origins": [],
+        "username": "freqtrader",
+        "password": "change_me"
+    },
+    "bot_name": "adaptive-trend",
+    "initial_state": "running",
+    "force_entry_enable": false,
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
